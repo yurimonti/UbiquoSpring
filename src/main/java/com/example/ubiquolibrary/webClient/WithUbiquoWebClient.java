@@ -1,4 +1,4 @@
-package com.example.ubiquolibrary;
+package com.example.ubiquolibrary.webClient;
 
 import java.lang.annotation.*;
 
@@ -10,4 +10,5 @@ import java.lang.annotation.*;
 public @interface WithUbiquoWebClient {
     String name();
     String baseUri();
+    boolean integrationMode();
 }

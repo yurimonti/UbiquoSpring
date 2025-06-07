@@ -1,4 +1,4 @@
-package com.example.ubiquolibrary;
+package com.example.ubiquolibrary.webClient;
 
 import org.springframework.context.annotation.Import;
 
