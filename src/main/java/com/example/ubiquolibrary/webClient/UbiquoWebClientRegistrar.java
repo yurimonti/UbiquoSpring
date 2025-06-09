@@ -7,6 +7,7 @@ import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.text.MessageFormat;
 import java.util.Map;
 
 public class UbiquoWebClientRegistrar implements ImportBeanDefinitionRegistrar {
@@ -22,9 +23,16 @@ public class UbiquoWebClientRegistrar implements ImportBeanDefinitionRegistrar {
         AnnotationAttributes[] clientsAttributes = (AnnotationAttributes[]) attributes.get("value");
         for (AnnotationAttributes clientAttr  : clientsAttributes) {
             String beanName = clientAttr.getString("name");
-            String baseUri = clientAttr.getString("baseUri");
+            String ubiquoHost = clientAttr.getString("ubiquoServer");
+            String serviceName = clientAttr.getString("serviceName");
+            String sutName = clientAttr.getString("sutName");
             boolean isIntegrationMode = clientAttr.getBoolean("integrationMode");
-            String definitiveUri = isIntegrationMode ? baseUri+"/integration" : baseUri+"/stubs";
+            String secondPartUri = "/api/v2";
+            String pathVariableUri = MessageFormat.format("/{0}/{1}", sutName, serviceName);
+            String uriWithOutMode = ubiquoHost+secondPartUri+pathVariableUri;
+            String definitiveUri = isIntegrationMode ?
+                    uriWithOutMode+"/integration" :
+                    uriWithOutMode+"/stubs";
             //OPTIONAL:
             if (registry.containsBeanDefinition(beanName)) {
                 registry.removeBeanDefinition(beanName);

@@ -45,11 +45,12 @@ public class UbiquoBehavior {
                 .uri(request.getUri())
                 .method(request.getMethod())
                 .build();
-        String reqBody = request.getBody();
+        Object reqBody = request.getBody();
         if(reqBody != null){
             try{
                 ObjectMapper mapper = new ObjectMapper();
-                JsonNode actualBody = mapper.readTree(reqBody);
+                String stringBody = reqBody instanceof String ? (String)reqBody : mapper.writeValueAsString(reqBody);
+                JsonNode actualBody = mapper.readTree(stringBody);
                 this.request.setBody(actualBody);
             }
             catch (JsonProcessingException e) {
@@ -64,11 +65,12 @@ public class UbiquoBehavior {
                 .headers(response.getHeaders())
                 .status(response.getStatus())
                 .build();
-        String resBody = response.getBody();
+        Object resBody = response.getBody();
         if(resBody != null){
             try{
                 ObjectMapper mapper = new ObjectMapper();
-                JsonNode actualBody = mapper.readTree(resBody);
+                String stringBody = mapper.writeValueAsString(resBody);
+                JsonNode actualBody = mapper.readTree(stringBody);
                 this.response.setBody(actualBody);
             }
             catch (JsonProcessingException e) {

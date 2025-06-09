@@ -17,5 +17,5 @@ public class UbiquoResStringBody {
     @Nullable
     private Map<String, List<String>> headers;
     @Nullable
-    private String body;
+    private Object body;
 }

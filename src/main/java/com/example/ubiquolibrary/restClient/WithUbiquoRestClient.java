@@ -6,6 +6,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface WithUbiquoRestClient {
     String name();
-    String baseUri();
+    //String baseUri();
+    String ubiquoServer();
+    String serviceName();
+    String sutName();
     boolean integrationMode();
 }
