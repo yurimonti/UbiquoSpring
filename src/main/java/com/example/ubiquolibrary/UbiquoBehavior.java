@@ -8,16 +8,10 @@ import com.example.ubiquolibrary.model.UbiquoRequest;
 import com.example.ubiquolibrary.model.UbiquoResStringBody;
 import com.example.ubiquolibrary.model.UbiquoResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.json.JsonAssert;
 import org.springframework.web.client.RestClient;
 
 public class UbiquoBehavior {
