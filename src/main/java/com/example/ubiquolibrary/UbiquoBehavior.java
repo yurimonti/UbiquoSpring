@@ -17,6 +17,7 @@ import lombok.Setter;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.json.JsonAssert;
 import org.springframework.web.client.RestClient;
 
 public class UbiquoBehavior {
@@ -69,8 +70,15 @@ public class UbiquoBehavior {
         if(resBody != null){
             try{
                 ObjectMapper mapper = new ObjectMapper();
-                String stringBody = mapper.writeValueAsString(resBody);
-                JsonNode actualBody = mapper.readTree(stringBody);
+                JsonNode actualBody = null;
+                if(resBody instanceof String && isValidJson((String)resBody,mapper))
+                {
+                    actualBody = mapper.readTree((String)resBody);
+                }
+                else {
+                    String stringBody = mapper.writeValueAsString(resBody);
+                    actualBody = mapper.readTree(stringBody);
+                }
                 this.response.setBody(actualBody);
             }
             catch (JsonProcessingException e) {
@@ -79,6 +87,15 @@ public class UbiquoBehavior {
 
         }
         return this;
+    }
+
+    private boolean isValidJson(String json, ObjectMapper objectMapper) {
+        try {
+            objectMapper.readTree(json);  // Can parse both objects and arrays
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     public void load(){
